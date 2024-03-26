@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
+use App\Models\Type;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,10 +21,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-
-
+        Type::create(['name' => 'education']);
+        Type::create(['name' => 'association']);
+        Type::create(['name' => 'sport']);
+        
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'benevole']);
-        Role::create(['name' => 'organisateur']);
+        Role::create(['name' => 'organisateur']);     
     }
 }
