@@ -25,8 +25,5 @@ class DatabaseSeeder extends Seeder
         Type::create(['name' => 'association']);
         Type::create(['name' => 'sport']);
         
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'benevole']);
-        Role::create(['name' => 'organisateur']);     
     }
 }

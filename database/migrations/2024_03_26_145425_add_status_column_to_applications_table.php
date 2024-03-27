@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('applications', function (Blueprint $table) {
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
         });
     }
 
@@ -23,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('roles');
+        Schema::table('applications', function (Blueprint $table) {
+            Schema::dropIfExists('applications');
+        });
     }
 };

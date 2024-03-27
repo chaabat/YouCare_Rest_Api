@@ -74,4 +74,29 @@ class AnnonceController extends Controller
         }
         return response()->json(['message' => 'Annonce not deleted'], 404);
     }
+
+  public function filter(Request $request)
+{
+    $request->validate([
+        'type_id' => 'integer|nullable',
+        'localisation' => 'string|nullable',
+    ]);
+
+    $query = Annonce::query();
+
+    $query->where(function ($query) use ($request) {
+        if ($request->has('type_id')) {
+            $query->where('type_id', $request->type_id);
+        }
+
+        if ($request->has('localisation')) {
+            $query->where('localisation', $request->localisation);
+        }
+    });
+
+    $annonces = $query->get();
+
+    return response()->json(['data' => $annonces]);
+}
+
 }
