@@ -8,6 +8,16 @@ use App\Models\Application;
 
 class ApplicationController extends Controller
 {
+    /**
+     * @OA\Get(
+     *      path="/api/mes-application",
+     *      summary="Get applications submitted by the authenticated user",
+     *      tags={"Applications"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="Successful operation"),
+     *      @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
     public function userApplications()
     {
         $userApplications = Application::where('user_id', auth()->id())->get();
@@ -15,7 +25,24 @@ class ApplicationController extends Controller
         return response()->json(['data' => $userApplications]);
     }
 
-
+    /**
+     * @OA\Post(
+     *      path="/api/application",
+     *      summary="Submit a new application",
+     *      tags={"Applications"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              required={"annonce_id"},
+     *              @OA\Property(property="annonce_id", type="integer", example="1")
+     *          )
+     *      ),
+     *      @OA\Response(response=201, description="Application submitted successfully"),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
     public function apply(Request $request)
     {
         $request->validate([
@@ -38,6 +65,16 @@ class ApplicationController extends Controller
         return response()->json(['message' => 'Application submitted successfully', 'data' => $application], 201);
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/applications",
+     *      summary="Get applications associated with announcements of the authenticated user",
+     *      tags={"Applications"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="Successful operation"),
+     *      @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
     public function index()
     {
         $applications = Application::whereHas('annonce', function ($query) {
@@ -47,7 +84,25 @@ class ApplicationController extends Controller
         return response()->json(['data' => $applications]);
     }
 
-
+    /**
+     * @OA\Patch(
+     *      path="/api/statut/{id}",
+     *      summary="Update status of a specific application",
+     *      tags={"Applications"},
+     *      security={{"bearerAuth":{}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              required={"status"},
+     *              @OA\Property(property="status", type="string", enum={"accepted", "rejected"}, example="accepted")
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="Application status updated successfully"),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=401, description="Unauthenticated"),
+     *      @OA\Response(response=404, description="Application not found")
+     * )
+     */
     public function updateStatus(Request $request, $id)
     {
         $request->validate([

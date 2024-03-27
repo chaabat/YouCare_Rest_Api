@@ -1,0 +1,411 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "YouCare",
+        "description": "YouCare API is a platform designed to facilitate volunteerism by connecting organizers of events with individuals willing to contribute their time and skills. Through this API, organizers can create announcements for various initiatives, specifying details such as event type, description, date, location, and required skills. Volunteers can browse these announcements, filtering them based on event type or location, and apply to participate in projects aligning with their interests and availability. The API also supports authentication mechanisms, allowing secure access to routes requiring authentication. Additionally, organizers have the ability to rate volunteers after each event, providing feedback to the community. Administrators can manage organizers, announcements, and volunteers, as well as view statistics related to events, organizers, and volunteers. With comprehensive documentation provided through Swagger, utilizing the YouCare API is made straightforward and accessible.",
+        "contact": {
+            "email": "test@test.com"
+        },
+        "license": {
+            "name": "API License",
+            "url": "http://www.example.com/license"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/index": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get a list of annonces",
+                "operationId": "e90f65f4f0af7ca81c389b332df9b3e4",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/api/annonce/{id}": {
+            "get": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Get a specific annonce",
+                "operationId": "8a5fe0783ca610710eea7ab1c1b83a08",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                }
+            }
+        },
+        "/api/create": {
+            "post": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Create a new annonce",
+                "operationId": "30ab0b80555584f595223d7778cbe8c6",
+                "responses": {
+                    "200": {
+                        "description": "Annonce added successfully"
+                    },
+                    "400": {
+                        "description": "Error occurred"
+                    }
+                }
+            }
+        },
+        "/api/update/{id}": {
+            "put": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Update an existing annonce",
+                "operationId": "6505f1b2632327d21f8f1990a5dcc0d7",
+                "responses": {
+                    "200": {
+                        "description": "Annonce updated successfully"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                }
+            }
+        },
+        "/api/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Delete an existing annonce",
+                "operationId": "3c1911420595f7511a092cc1a8739b14",
+                "responses": {
+                    "200": {
+                        "description": "Annonce deleted successfully"
+                    },
+                    "404": {
+                        "description": "Annonce not found"
+                    }
+                }
+            }
+        },
+        "/api/filter": {
+            "post": {
+                "tags": [
+                    "Annonces"
+                ],
+                "summary": "Filter annonces based on criteria",
+                "operationId": "907c21dc5fe59935682c523b9708768b",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "422": {
+                        "description": "Invalid data provided"
+                    }
+                }
+            }
+        },
+        "/api/mes-application": {
+            "get": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Get applications submitted by the authenticated user",
+                "operationId": "11ef8b7bd09d239af7cff12e2ca59d1c",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/application": {
+            "post": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Submit a new application",
+                "operationId": "6947bb0f456b5fd06e02076fb7a529e4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "annonce_id"
+                                ],
+                                "properties": {
+                                    "annonce_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Application submitted successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/applications": {
+            "get": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Get applications associated with announcements of the authenticated user",
+                "operationId": "2f03886edf85feed716bc2df942958ed",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/statut/{id}": {
+            "patch": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Update status of a specific application",
+                "operationId": "833619a0a07cccda78ac6debd6f4e0fd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "accepted",
+                                            "rejected"
+                                        ],
+                                        "example": "accepted"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Application status updated successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Application not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login user",
+                "operationId": "44212a9096e4b09358281e9ec8a0701d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "operationId": "a718f172ff3ac464d723835815f8fb57",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "enum": [
+                                            "admin",
+                                            "user"
+                                        ],
+                                        "example": "user"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout user",
+                "operationId": "79854151e609bd20032aa5aa4d5a35c0",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh user token",
+                "operationId": "7d5da2870d3eba95cdd67878ab20da3a",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
