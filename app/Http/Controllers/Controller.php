@@ -10,9 +10,9 @@ use Illuminate\Routing\Controller as BaseController;
  * @OA\Info(
  *      title="YouCare",
  *      version="1.0.0",
- *      description="YouCare API is a platform designed to facilitate volunteerism by connecting organizers of events with individuals willing to contribute their time and skills. Through this API, organizers can create announcements for various initiatives, specifying details such as event type, description, date, location, and required skills. Volunteers can browse these announcements, filtering them based on event type or location, and apply to participate in projects aligning with their interests and availability. The API also supports authentication mechanisms, allowing secure access to routes requiring authentication. Additionally, organizers have the ability to rate volunteers after each event, providing feedback to the community. Administrators can manage organizers, announcements, and volunteers, as well as view statistics related to events, organizers, and volunteers. With comprehensive documentation provided through Swagger, utilizing the YouCare API is made straightforward and accessible.",
+ *      description="L'API YouCare est une plateforme conçue pour faciliter le volontariat en mettant en relation les organisateurs d'événements avec des individus désireux de consacrer leur temps et leurs compétences. Grâce à cette API, les organisateurs peuvent créer facilement des annonces pour diverses initiatives, en spécifiant des détails tels que le type d'événement, la description, la date, le lieu et les compétences requises. Les volontaires peuvent parcourir ces annonces, les filtrer en fonction du type d'événement ou du lieu, et postuler pour participer à des projets correspondant à leurs intérêts et disponibilités.",
  *      @OA\Contact(
- *          email="test@test.com"
+ *          email="chaabat.02@gmail.com"
  *      ),
  *      @OA\License(
  *          name="API License",
