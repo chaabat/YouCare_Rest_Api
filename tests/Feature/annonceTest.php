@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
@@ -19,7 +18,8 @@ class annonceTest extends TestCase
 
         $response->assertStatus(200);
     }
-    public function testAnnoceCreated(){
+    public function testAnnoceCreated()
+    {
 
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -36,19 +36,45 @@ class annonceTest extends TestCase
         $response->assertStatus(200);
     }
 
-    // public function testupdateCreated()
-    // {
-    //     $user = User::factory()->create();
-    //     $annonce = Annonce::factory()->create(['user_id' => $user->id]);
-    //     $this->actingAs($user);
-    //     $response = $this->put('/api/update/' . $annonce->id, [ // Added slash (/) before the ID
-    //         'titre' => 'titre',
-    //         'description' => 'description',
-    //         'date' => '2000-2-21',
-    //         'localisation' => 'location',
-    //         'competence' => 'comend',
-    //         'type_id' => 2,
-    //     ]);
-    //     $response->assertStatus(200);
-    // }
+    public function testUpdateAnnonce()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $announcement = Annonce::create([
+            'user_id' => $user->id,
+            'titre' => 'Updated Title',
+            'description' => 'Updated Description',
+            'date' => '2024-03-27',
+            'localisation' => 'Updated localisation',
+            'competence' => 'Updated Competence',
+            'type_id' => 2,
+        ]);
+        $response = $this->put('/api/update/' . $announcement->id, [
+            'user_id' => $user->id,
+            'titre' => 'Updated Titlehhhhhhhhhh',
+            'description' => 'Updated Descriptionhhhhhhh',
+            'date' => '2024-03-11',
+            'localisation' => 'Updated localisationhhhhhh',
+            'competence' => 'Updated Competencehhhhhh',
+            'type_id' => 2,
+        ]);
+        $response->assertStatus(200);
+    }
+
+    public function testDeleteAnnonce()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $announcement = Annonce::create([
+            'user_id' => $user->id,
+            'titre' => 'Updated Titlehhhhhhhhhh',
+            'description' => 'Updated Descriptionhhhhhhh',
+            'date' => '2024-03-11',
+            'localisation' => 'Updated localisationhhhhhh',
+            'competence' => 'Updated Competencehhhhhh',
+            'type_id' => 2,
+        ]);
+        $response = $this->delete('/api/delete/' . $announcement->id, []);
+        $response->assertStatus(200);
+    }
 }
