@@ -9,14 +9,24 @@ class Annonce extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'titre',
+        'date',
+        'description',
+        'localisation',
+        'competence',
+        'user_id',
+        'type_id'
+    ];
 
-    public function type(){
+    public function type()
+    {
 
         return $this->belongsTo(Type::class);
     }
 
-    public function application(){
+    public function application()
+    {
         return $this->hasMany(Application::class);
     }
 }

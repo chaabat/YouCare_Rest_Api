@@ -9,9 +9,10 @@ class Type extends Model
 {
     use HasFactory;
 
-    protected $guarded =[];
+    protected $fillable = ['name'];
 
-    public function annonce(){
+    public function annonce()
+    {
 
         return $this->hasMany(type::class);
     }

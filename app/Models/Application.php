@@ -9,13 +9,18 @@ class Application extends Model
 {
     use HasFactory;
 
-    protected $guarded=[];
+    protected $fillable = [
+        'user_id',
+        'annonce_id',
+    ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function annonce(){
+    public function annonce()
+    {
         return $this->belongsTo(Annonce::class);
     }
 }

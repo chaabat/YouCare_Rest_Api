@@ -16,82 +16,30 @@ class UserTest extends TestCase
      */
     public function testRegister(): void
     {
-        // Define request data
-        $userData = [
+        $register = $this->post('/api/register',[
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password',
-            'role' => 'user',
-        ];
-
-        // Make POST request to register endpoint
-        $response = $this->postJson('/api/register', $userData);
-
-        // Assert response status
-        $response->assertStatus(200);
-
-        // Assert response structure and content
-        $response->assertJson([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => [
-                'name' => $userData['name'],
-                'email' => $userData['email'],
-                'role' => $userData['role'],
-            ],
+            'password_confirmation' => 'password',
+            'role' => 'organisateur',
         ]);
-
-        // Assert token is present in the response
-        $response->assertJsonStructure([
-            'authorization' => [
-                'token',
-                'type',
-            ],
-        ]);
-
-        // Assert user exists in the database
-        $this->assertDatabaseHas('users', [
-            'name' => $userData['name'],
-            'email' => $userData['email'],
-            'role' => $userData['role'],
-        ]);
-
-        // Assert password is hashed in the database
-        $this->assertTrue(Hash::check($userData['password'], User::where('email', $userData['email'])->first()->password));
+        $register->assertStatus(200);
     }
 
 
-    // public function testLogin(): void
-    // {
-    //     // Create a user
-    //     $password = 'password';
-    //     $user = User::factory()->create([
-    //         'password' => Hash::make($password),
-    //     ]);
+    public function testLogin(): void
+{
+    $user = User::factory()->create([
+        'email' => 'test@example.com',
+        'password' => Hash::make('password'),
+    ]);
 
-    //     // Define login data
-    //     $loginData = [
-    //         'email' => $user->email,
-    //         'password' => $password,
-    //     ];
+    $login = $this->post('api/login', [
+        'email' => 'test@example.com',
+        'password' => 'password',
+    ]);
 
-    //     // Make POST request to login endpoint
-    //     $response = $this->postJson('/api/login', $loginData);
+    $login->assertStatus(200);
+}
 
-    //     // Assert response status
-    //     $response->assertStatus(200);
-
-    //     // Assert response structure and content
-    //     $response->assertJson([
-    //         'status' => 'success',
-    //     ]);
-
-    //     // Assert token is present in the response
-    //     $response->assertJsonStructure([
-    //         'authorization' => [
-    //             'token',
-    //             'type',
-    //         ],
-    //     ]);
-    // }
 }

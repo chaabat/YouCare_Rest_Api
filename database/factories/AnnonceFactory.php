@@ -27,7 +27,7 @@ class AnnonceFactory extends Factory
             'description' => $this->faker->paragraph,
             'localisation' => $this->faker->city,
             'competence' => $this->faker->words(3, true),
-            'type_id' => $this->faker->numberBetween(1, 3), 
+            'type_id' => $this->faker->numberBetween(1,3), 
         ];
     }
 }
